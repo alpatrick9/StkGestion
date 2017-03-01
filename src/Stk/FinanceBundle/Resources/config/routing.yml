@@ -1,0 +1,3 @@
+finance_app:
+    resource: "@StkFinanceBundle/Controller"
+    type: annotation

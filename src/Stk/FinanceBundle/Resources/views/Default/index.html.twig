@@ -1,0 +1,10 @@
+{% extends "StkFinanceBundle::layout.html.twig" %}
+{% block body_finance%}
+    <h2>Liste des membres</h2>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("finance-home-link");
+        nav.className +=" active";
+    </script>
+{% endblock %}

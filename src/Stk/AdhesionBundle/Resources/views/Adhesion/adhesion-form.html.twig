@@ -1,0 +1,16 @@
+{% extends "StkAdhesionBundle::layout.html.twig" %}
+{% block body_adhesion %}
+    <h2>Nouvelle adhésion</h2>
+    <form method="post">
+        {{ form_widget(form) }}
+        <div class="form-button">
+            <input type="submit" value="Enregistrer"/>
+        </div>
+    </form>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("adhesion-new-link");
+        nav.className += " active";
+    </script>
+{% endblock %}

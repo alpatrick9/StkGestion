@@ -1,13 +1,36 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
+<head>
+    <title>STK</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <script type="text/javascript" src="{{ absolute_url(asset('assets/js/jquery-1.11.3.min.js')) }}"></script>
+    <script type="text/javascript" src="{{ absolute_url(asset('assets/js/bootstrap.min.js')) }}"></script>
+    <script type="text/javascript" src="{{ absolute_url(asset('assets/js/js.js')) }}"></script>
+    <script type="text/javascript" src="{{ absolute_url(asset('assets/js/jquery.scrolly.min.js')) }}"></script>
+    <script type="text/javascript" src="{{ absolute_url(asset('assets/js/jquery.scrollzer.min.js')) }}"></script>
+    <script type="text/javascript" src="{{ absolute_url(asset('assets/js/skel.min.js')) }}"></script>
+    <script type="text/javascript" src="{{ absolute_url(asset('assets/js/util.js')) }}"></script>
+    <script type="text/javascript" src="{{ absolute_url(asset('assets/js/main.js')) }}"></script>
+
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/main.css')) }}"/>
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/mystyle.css')) }}"/>
+</head>
+<body>
+<div id="header">
+    <div class="top">
+        <nav id="nav">
+            {% block menu %}{% endblock %}
+        </nav>
+    </div>
+</div>
+<div id="main">
+    <div class="container">
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    </div>
+</div>
+
+{% block javascripts %}{% endblock %}
+</body>
 </html>

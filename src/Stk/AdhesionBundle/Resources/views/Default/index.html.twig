@@ -1,0 +1,53 @@
+{% extends "StkAdhesionBundle::layout.html.twig" %}
+{% block body_adhesion%}
+    <h2>Liste des membres</h2>
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+        <th>#</th>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Adresse</th>
+        <th>type</th>
+        <th></th>
+        </thead>
+        <tbody>
+        {% for membre in membres %}
+            <tr>
+                <td>
+                    {{ membre.id}}
+                </td>
+                <td>
+                    {{ membre.firstName}}
+                </td>
+                <td>
+                    {{ membre.lastName}}
+                </td>
+                <td>
+                    {{ membre.address}}
+                </td>
+                <td>
+                    {{ type[membre.type] }}
+                </td>
+                <td>
+                    <a href="{{ path('editmembre', {id: membre.id}) }}" title="Modifier">
+                        <span class="icon fa-edit"></span>
+                    </a>
+                    <a href="{{ path('deletemembre', {id: membre.id}) }}" title="Supprimer">
+                        <span class="icon fa-remove"></span>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun membre enregistré</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("adhesion-home-link");
+        nav.className +=" active";
+    </script>
+{% endblock %}

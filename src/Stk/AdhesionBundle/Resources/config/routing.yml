@@ -1,0 +1,3 @@
+adhesion_app:
+    resource: "@StkAdhesionBundle/Controller"
+    type: annotation
