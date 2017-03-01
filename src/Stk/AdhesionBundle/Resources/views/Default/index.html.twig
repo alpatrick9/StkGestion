@@ -32,7 +32,7 @@
                     <a href="{{ path('editmembre', {id: membre.id}) }}" title="Modifier">
                         <span class="icon fa-edit"></span>
                     </a>
-                    <a href="{{ path('deletemembre', {id: membre.id}) }}" title="Supprimer">
+                    <a href="{{ path('deletemembre', {id: membre.id}) }}" title="Supprimer" onclick="return confirm('Voulez vous supprimer tous les données concernant {{ membre.lastName }} {{ membre.firstName }}?')">
                         <span class="icon fa-remove"></span>
                     </a>
                 </td>
