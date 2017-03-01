@@ -1,0 +1,9 @@
+/web/bundles/
+
+/app/cache/*
+
+app/logs/*
+
+.idea/*
+
+.idea/workspace.xml
