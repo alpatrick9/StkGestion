@@ -1,0 +1,19 @@
+{% extends "StkAdhesionBundle::layout.html.twig" %}
+{% block body_adhesion %}
+    <h2>Importé des données</h2>
+    {% if error_message is defined %}
+        <p style="color: red "> {{ error_message }}</p>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {{ form_widget(form) }}
+        <div class="form-button">
+            <input type="submit" value="Enregistrer"/>
+        </div>
+    </form>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("import-data-presence-link");
+        nav.className += " active";
+    </script>
+{% endblock %}

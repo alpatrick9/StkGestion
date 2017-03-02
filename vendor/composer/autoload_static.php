@@ -48,6 +48,10 @@ class ComposerStaticInit962b7e362839934c9fe54727c29232ce
         array (
             'Monolog\\' => 8,
         ),
+        'L' => 
+        array (
+            'Liuggio\\ExcelBundle\\' => 20,
+        ),
         'I' => 
         array (
             'Incenteev\\ParameterHandler\\' => 27,
@@ -146,6 +150,10 @@ class ComposerStaticInit962b7e362839934c9fe54727c29232ce
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'Liuggio\\ExcelBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/liuggio/ExcelBundle',
+        ),
         'Incenteev\\ParameterHandler\\' => 
         array (
             0 => __DIR__ . '/..' . '/incenteev/composer-parameter-handler',
@@ -192,6 +200,10 @@ class ComposerStaticInit962b7e362839934c9fe54727c29232ce
             'Psr\\Log\\' => 
             array (
                 0 => __DIR__ . '/..' . '/psr/log',
+            ),
+            'PHPExcel' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
             ),
         ),
         'D' => 

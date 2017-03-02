@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Stk\AdhesionBundle\StkAdhesionBundle(),
             new Stk\FinanceBundle\StkFinanceBundle(),
+            new \Liuggio\ExcelBundle\LiuggioExcelBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

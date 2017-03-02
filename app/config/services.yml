@@ -3,6 +3,7 @@
 parameters:
 #    parameter_name: value
     type: {c: 'Chorale', s: 'Supporteur/trice'}
+    upload_type: 'application/vnd.ms-office'
 
 services:
 #    service_name:
