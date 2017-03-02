@@ -1,0 +1,39 @@
+{% extends "StkAdhesionBundle::layout.html.twig" %}
+{% block body_adhesion %}
+    <div>
+        <a href="{{ path('yearpresence') }}"><span class="icon fa-backward"></span></a>
+    </div>
+    <h2>Etat présence de chaque membre de l'année {{ year }}</h2>
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+        <th>#</th>
+        <th>Nom complet</th>
+        <th>Nombre de présence</th>
+        <th>Nombre de retard </th>
+        <th>Note</th>
+        </thead>
+        <tbody>
+        {% for etat in etats %}
+            <tr>
+                <td>{{ etat.idMembre }}</td>
+                <td>{{ etat.fullName }}</td>
+                <td>{{ etat.nbPresence }}</td>
+                <td>{{ etat.nbLate }}</td>
+                <td>{{ etat.note }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun données enregistré pour l'année {{ year }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("note-link");
+        nav.className += " active";
+    </script>
+{% endblock %}

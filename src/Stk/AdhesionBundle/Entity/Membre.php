@@ -38,7 +38,7 @@ class Membre
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
     private $address;
 
@@ -49,11 +49,17 @@ class Membre
      */
     private $type;
 
+    /**
+     * @var Presence[]
+     *
+     * @ORM\OneToMany(targetEntity="Stk\AdhesionBundle\Entity\Presence", mappedBy="membre", cascade={"remove"})
+     */
+    private $presences;
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -155,5 +161,45 @@ class Membre
     {
         return $this->type;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->presences = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add presence
+     *
+     * @param \Stk\AdhesionBundle\Entity\Presence $presence
+     *
+     * @return Membre
+     */
+    public function addPresence(\Stk\AdhesionBundle\Entity\Presence $presence)
+    {
+        $this->presences[] = $presence;
+
+        return $this;
+    }
+
+    /**
+     * Remove presence
+     *
+     * @param \Stk\AdhesionBundle\Entity\Presence $presence
+     */
+    public function removePresence(\Stk\AdhesionBundle\Entity\Presence $presence)
+    {
+        $this->presences->removeElement($presence);
+    }
+
+    /**
+     * Get presences
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPresences()
+    {
+        return $this->presences;
+    }
+}

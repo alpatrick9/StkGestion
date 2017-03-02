@@ -10,4 +10,9 @@ namespace Stk\AdhesionBundle\Repository;
  */
 class MembreRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findChoralMembre() {
+        $query = $this->createQueryBuilder('membre')
+            ->where('membre.type like :type')->setParameter('type','c');
+        return $query->getQuery()->getResult();
+    }
 }

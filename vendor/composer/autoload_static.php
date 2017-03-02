@@ -62,6 +62,7 @@ class ComposerStaticInit962b7e362839934c9fe54727c29232ce
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 36,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
+            'DoctrineExtensions\\' => 19,
         ),
     );
 
@@ -173,6 +174,10 @@ class ComposerStaticInit962b7e362839934c9fe54727c29232ce
         'Doctrine\\Bundle\\DoctrineBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-bundle',
+        ),
+        'DoctrineExtensions\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/beberlei/DoctrineExtensions/src',
         ),
     );
 

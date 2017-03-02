@@ -17,7 +17,8 @@
         "sensio/distribution-bundle": "~5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "liuggio/ExcelBundle": "^2.1"
+        "liuggio/ExcelBundle": "^2.1",
+        "beberlei/DoctrineExtensions": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
@@ -54,5 +55,8 @@
         "branch-alias": {
             "dev-master": "2.8-dev"
         }
+    },
+    "repositories": {
+        "packagist": { "url": "https://packagist.org", "type": "composer" }
     }
 }
