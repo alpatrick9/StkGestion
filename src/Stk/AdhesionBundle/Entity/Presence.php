@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Presence
  *
- * @ORM\Table(name="presence", uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"date", "membre_id"})})
+ * @ORM\Table(name="presence")
  * @ORM\Entity(repositoryClass="Stk\AdhesionBundle\Repository\PresenceRepository")
  */
 class Presence

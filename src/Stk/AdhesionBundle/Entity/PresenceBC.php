@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PresenceBC
  *
- * @ORM\Table(name="presence_b_c", uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"date", "membre_id"})})
+ * @ORM\Table(name="presence_b_c")
  * @ORM\Entity(repositoryClass="Stk\AdhesionBundle\Repository\PresenceBCRepository")
  */
 class PresenceBC
@@ -24,14 +24,14 @@ class PresenceBC
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 
     /**
      * @var Membre
      *
-     * @ORM\ManyToOne(targetEntity="Stk\AdhesionBundle\Entity\Membre", inversedBy="presencesBc", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Stk\AdhesionBundle\Entity\Membre", inversedBy="presencesBc")
      * @ORM\JoinColumn(nullable=false)
      */
     private $membre;

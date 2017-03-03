@@ -1,6 +1,7 @@
 <?php
 
 namespace Stk\AdhesionBundle\Repository;
+use DoctrineExtensions\Query\Mysql\Date;
 use Stk\AdhesionBundle\Entity\Membre;
 
 /**
@@ -17,5 +18,14 @@ class PresenceBCRepository extends \Doctrine\ORM\EntityRepository
             ->where('YEAR(presence.date) = :year')->setParameter('year', $annee)
             ->andWhere('presence.membre = :membre')->setParameter('membre', $membre);
         return $query->getQuery()->getOneOrNullResult();
+    }
+
+    public function isExist(Membre $membre, $date) {
+        ///
+        $query = $this->createQueryBuilder('presence')
+            ->where('YEAR(presence.date) = :date')->setParameter('date', date('Y',$date->getTimestamp()))
+            ->andWhere('MONTH(presence.date) = :date')->setParameter('date', date('M',$date->getTimestamp()))
+            ->andWhere('presence.membre = :membre')->setParameter('membre', $membre);
+        return $query->getQuery()->getResult() != null;
     }
 }
