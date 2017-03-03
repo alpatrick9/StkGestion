@@ -15,6 +15,13 @@ class MembreRepository extends \Doctrine\ORM\EntityRepository
             ->where('membre.status like :status')->setParameter('status','c');
         return $query->getQuery()->getResult();
     }
+    
+    public function findChoralBC() {
+        $query = $this->createQueryBuilder('membre')
+            ->where('membre.likeAs like :likeAs')->setParameter('likeAs','b')
+            ->orWhere('membre.likeAs like :likeAs')->setParameter('likeAs','c');
+        return $query->getQuery()->getResult();
+    }
 
     public function getMaxId() {
         $query = $this->createQueryBuilder('membre')

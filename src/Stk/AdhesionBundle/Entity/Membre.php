@@ -64,6 +64,13 @@ class Membre
     private $presences;
 
     /**
+     * @var PresenceBC[]
+     *
+     * @ORM\OneToMany(targetEntity="Stk\AdhesionBundle\Entity\PresenceBC", mappedBy="membre", cascade={"remove"})
+     */
+    private $presencesBc;
+
+    /**
      * Get id
      *
      * @return integer
@@ -246,5 +253,39 @@ class Membre
         $this->id = $id;
 
         return $this;
+    }
+
+    /**
+     * Add presencesBc
+     *
+     * @param \Stk\AdhesionBundle\Entity\PresenceBC $presencesBc
+     *
+     * @return Membre
+     */
+    public function addPresencesBc(\Stk\AdhesionBundle\Entity\PresenceBC $presencesBc)
+    {
+        $this->presencesBc[] = $presencesBc;
+
+        return $this;
+    }
+
+    /**
+     * Remove presencesBc
+     *
+     * @param \Stk\AdhesionBundle\Entity\PresenceBC $presencesBc
+     */
+    public function removePresencesBc(\Stk\AdhesionBundle\Entity\PresenceBC $presencesBc)
+    {
+        $this->presencesBc->removeElement($presencesBc);
+    }
+
+    /**
+     * Get presencesBc
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPresencesBc()
+    {
+        return $this->presencesBc;
     }
 }

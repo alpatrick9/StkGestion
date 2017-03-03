@@ -45,7 +45,7 @@ class Membre
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, options={"default" : "c"} )
      */
     private $status;
 
@@ -62,6 +62,13 @@ class Membre
      * @ORM\OneToMany(targetEntity="Stk\AdhesionBundle\Entity\Presence", mappedBy="membre", cascade={"remove"})
      */
     private $presences;
+
+    /**
+     * @var PresenceBC[]
+     *
+     * @ORM\OneToMany(targetEntity="Stk\AdhesionBundle\Entity\PresenceBC", mappedBy="membre", cascade={"remove"})
+     */
+    private $presencesBc;
 
     /**
      * Get id
@@ -232,5 +239,19 @@ class Membre
     public function getLikeAs()
     {
         return $this->likeAs;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return Membre
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 }

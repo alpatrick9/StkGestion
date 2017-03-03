@@ -1,0 +1,35 @@
+{% extends "StkAdhesionBundle::layout.html.twig" %}
+{% block body_adhesion %}
+    <div>
+        <a href="{{ path('yearpresencebc') }}"><span class="icon fa-backward"></span></a>
+    </div>
+    <h2>Etat présence de chaque membre de l'année {{ year }} Bureau/Commite</h2>
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+        <th>#</th>
+        <th>Nom complet</th>
+        <th>Nombre de présence</th>
+        </thead>
+        <tbody>
+        {% for etat in etats %}
+            <tr>
+                <td>{{ etat.idMembre }}</td>
+                <td>{{ etat.fullName }}</td>
+                <td>{{ etat.nbPresence }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun données enregistré pour l'année {{ year }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("note-bc-link");
+        nav.className += " active";
+    </script>
+{% endblock %}

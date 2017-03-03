@@ -5,12 +5,12 @@ namespace Stk\AdhesionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Presence
+ * PresenceBC
  *
- * @ORM\Table(name="presence", uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"date", "membre_id"})})
- * @ORM\Entity(repositoryClass="Stk\AdhesionBundle\Repository\PresenceRepository")
+ * @ORM\Table(name="presence_b_c", uniqueConstraints={@ORM\UniqueConstraint(name="idxUnique", columns={"date", "membre_id"})})
+ * @ORM\Entity(repositoryClass="Stk\AdhesionBundle\Repository\PresenceBCRepository")
  */
-class Presence
+class PresenceBC
 {
     /**
      * @var int
@@ -24,21 +24,14 @@ class Presence
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="date")
      */
     private $date;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="lite_time", type="integer")
-     */
-    private $lateTime;
-    
-    /**
      * @var Membre
      *
-     * @ORM\ManyToOne(targetEntity="Stk\AdhesionBundle\Entity\Membre", inversedBy="presences")
+     * @ORM\ManyToOne(targetEntity="Stk\AdhesionBundle\Entity\Membre", inversedBy="presencesBc", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $membre;
@@ -59,7 +52,7 @@ class Presence
      *
      * @param \DateTime $date
      *
-     * @return Presence
+     * @return PresenceBC
      */
     public function setDate($date)
     {
@@ -79,35 +72,11 @@ class Presence
     }
 
     /**
-     * Set time
-     *
-     * @param \DateTime $time
-     *
-     * @return Presence
-     */
-    public function setTime($time)
-    {
-        $this->time = $time;
-
-        return $this;
-    }
-
-    /**
-     * Get time
-     *
-     * @return \DateTime
-     */
-    public function getTime()
-    {
-        return $this->time;
-    }
-
-    /**
      * Set membre
      *
      * @param \Stk\AdhesionBundle\Entity\Membre $membre
      *
-     * @return Presence
+     * @return PresenceBC
      */
     public function setMembre(\Stk\AdhesionBundle\Entity\Membre $membre)
     {
@@ -124,29 +93,5 @@ class Presence
     public function getMembre()
     {
         return $this->membre;
-    }
-
-    /**
-     * Set lateTime
-     *
-     * @param integer $lateTime
-     *
-     * @return Presence
-     */
-    public function setLateTime($lateTime)
-    {
-        $this->lateTime = $lateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get lateTime
-     *
-     * @return integer
-     */
-    public function getLateTime()
-    {
-        return $this->lateTime;
     }
 }

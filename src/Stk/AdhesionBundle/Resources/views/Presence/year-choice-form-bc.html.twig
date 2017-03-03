@@ -1,0 +1,17 @@
+{% extends "StkAdhesionBundle::layout.html.twig" %}
+{% block body_adhesion %}
+    <h2>Status membre par année Bureau/Commite</h2>
+
+    <form method="post">
+        {{ form_widget(form) }}
+        <div class="form-button">
+            <input type="submit" value="Afficher"/>
+        </div>
+    </form>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("note-bc-link");
+        nav.className += " active";
+    </script>
+{% endblock %}

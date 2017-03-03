@@ -5,6 +5,7 @@
         <p style="color: red "> {{ error_message }}</p>
     {% endif %}
     <form method="post" enctype="multipart/form-data">
+        {{ form_widget(typeForm) }}
         {{ form_widget(form) }}
         <div class="form-button">
             <input type="submit" value="Enregistrer"/>
