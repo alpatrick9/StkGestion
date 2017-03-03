@@ -17,7 +17,7 @@ class Membre
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $id;
 
@@ -45,9 +45,16 @@ class Membre
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255)
      */
-    private $type;
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="like_as", type="string", length=255, options={"default" : "s"})
+     */
+    private $likeAs;
 
     /**
      * @var Presence[]
@@ -141,13 +148,13 @@ class Membre
     /**
      * Set type
      *
-     * @param string $type
+     * @param string $status
      *
      * @return Membre
      */
-    public function setType($type)
+    public function setStatus($status)
     {
-        $this->type = $type;
+        $this->status = $status;
 
         return $this;
     }
@@ -157,8 +164,73 @@ class Membre
      *
      * @return string
      */
-    public function getType()
+    public function getStatus()
     {
-        return $this->type;
+        return $this->status;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->presences = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add presence
+     *
+     * @param \Stk\AdhesionBundle\Entity\Presence $presence
+     *
+     * @return Membre
+     */
+    public function addPresence(\Stk\AdhesionBundle\Entity\Presence $presence)
+    {
+        $this->presences[] = $presence;
+
+        return $this;
+    }
+
+    /**
+     * Remove presence
+     *
+     * @param \Stk\AdhesionBundle\Entity\Presence $presence
+     */
+    public function removePresence(\Stk\AdhesionBundle\Entity\Presence $presence)
+    {
+        $this->presences->removeElement($presence);
+    }
+
+    /**
+     * Get presences
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPresences()
+    {
+        return $this->presences;
+    }
+
+    /**
+     * Set likeAs
+     *
+     * @param string $likeAs
+     *
+     * @return Membre
+     */
+    public function setLikeAs($likeAs)
+    {
+        $this->likeAs = $likeAs;
+
+        return $this;
+    }
+
+    /**
+     * Get likeAs
+     *
+     * @return string
+     */
+    public function getLikeAs()
+    {
+        return $this->likeAs;
     }
 }

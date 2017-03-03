@@ -28,11 +28,13 @@ class DefaultController extends Controller
          */
         $membres = $repository->findAll();
 
-        $type = $this->getParameter('type');
+        $status = $this->getParameter('status');
+        $likeAs = $this->getParameter('membre_like_as');
 
         return $this->render('StkAdhesionBundle:Default:index.html.twig', [
             'membres' => $membres,
-            'type' => $type
+            'status' => $status,
+            'likeAs'=> $likeAs
         ]);
     }
     

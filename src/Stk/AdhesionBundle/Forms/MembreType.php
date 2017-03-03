@@ -31,10 +31,16 @@ class MembreType extends AbstractType
                 'label' => 'Adresse: ',
                 'required' => false
             ])
-            ->add('type', ChoiceType::class, [
+            ->add('status', ChoiceType::class, [
                 'label' => 'Type du membre: ',
                 'choices_as_values'=>true,
                 'choices'=>['Chorale'=>'c', 'Supporteur/trice'=>'s'],
+                'placeholder'=>'Choisissez...'
+            ])
+            ->add('likeAs', ChoiceType::class, [
+                'label' => 'Membre en tant que: ',
+                'choices_as_values'=>true,
+                'choices'=>['Simple membre'=>'s', 'Membre du bureau'=>'b', 'Membre du commité'=>'c'],
                 'placeholder'=>'Choisissez...'
             ]);
     }

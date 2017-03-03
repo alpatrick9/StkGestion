@@ -12,7 +12,13 @@ class MembreRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findChoralMembre() {
         $query = $this->createQueryBuilder('membre')
-            ->where('membre.type like :type')->setParameter('type','c');
+            ->where('membre.status like :status')->setParameter('status','c');
         return $query->getQuery()->getResult();
+    }
+
+    public function getMaxId() {
+        $query = $this->createQueryBuilder('membre')
+            ->select('MAX(membre.id)');
+        return $query->getQuery()->getSingleScalarResult();
     }
 }

@@ -17,7 +17,7 @@ class Membre
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $id;
 
@@ -45,9 +45,16 @@ class Membre
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, options={"default" : "c"} )
      */
-    private $type;
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="like_as", type="string", length=255, options={"default" : "s"})
+     */
+    private $likeAs;
 
     /**
      * @var Presence[]
@@ -141,13 +148,13 @@ class Membre
     /**
      * Set type
      *
-     * @param string $type
+     * @param string $status
      *
      * @return Membre
      */
-    public function setType($type)
+    public function setStatus($status)
     {
-        $this->type = $type;
+        $this->status = $status;
 
         return $this;
     }
@@ -157,9 +164,9 @@ class Membre
      *
      * @return string
      */
-    public function getType()
+    public function getStatus()
     {
-        return $this->type;
+        return $this->status;
     }
     /**
      * Constructor
@@ -201,5 +208,43 @@ class Membre
     public function getPresences()
     {
         return $this->presences;
+    }
+
+    /**
+     * Set likeAs
+     *
+     * @param string $likeAs
+     *
+     * @return Membre
+     */
+    public function setLikeAs($likeAs)
+    {
+        $this->likeAs = $likeAs;
+
+        return $this;
+    }
+
+    /**
+     * Get likeAs
+     *
+     * @return string
+     */
+    public function getLikeAs()
+    {
+        return $this->likeAs;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return Membre
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 }

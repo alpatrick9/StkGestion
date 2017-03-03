@@ -2,7 +2,8 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
 #    parameter_name: value
-    type: {c: 'Chorale', s: 'Supporteur/trice'}
+    status: {c: 'Chorale', s: 'Supporteur/trice'}
+    membre_like_as: {s: 'Simple membre', b: 'Membre du bureau', c: 'Membre du commité'}
     upload_type: 'application/vnd.ms-office'
     interval_to_late: 15
 

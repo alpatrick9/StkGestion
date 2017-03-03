@@ -1,6 +1,6 @@
 {% extends "StkAdhesionBundle::layout.html.twig" %}
 {% block body_adhesion %}
-    <h2>Importé des données de présence</h2>
+    <h2>Importé des données de membres</h2>
     {% if error_message is defined %}
         <p style="color: red "> {{ error_message }}</p>
     {% endif %}
@@ -13,7 +13,7 @@
 {% endblock %}
 {% block javascripts %}
     <script>
-        var nav = document.getElementById("import-data-presence-link");
+        var nav = document.getElementById("adhesion-new-import-link");
         nav.className += " active";
     </script>
 {% endblock %}
