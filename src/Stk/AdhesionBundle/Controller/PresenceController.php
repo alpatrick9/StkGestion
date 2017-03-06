@@ -11,6 +11,7 @@ namespace Stk\AdhesionBundle\Controller;
 use Doctrine\DBAL\Exception\ConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use Stk\AdhesionBundle\Entity\Membre;
+use Stk\AdhesionBundle\Entity\Presence;
 use Stk\AdhesionBundle\Entity\PresenceBC;
 use Stk\AdhesionBundle\Forms\UploadType;
 use Stk\AdhesionBundle\Forms\YearType;
@@ -74,7 +75,6 @@ class PresenceController extends Controller
              */
             $excelManager = $this->get('phpexcel')->createPHPExcelObject($file->getPathname());
 
-
             $sheet = $excelManager->getSheet(0);
 
             $type = $typePresenceForm['type']->getData();
@@ -86,16 +86,48 @@ class PresenceController extends Controller
 
             switch ($type) {
                 case 'tm':
-                    if ($sheet->getCellByColumnAndRow(0, 1)->getValue() != 'Date' || $sheet->getCellByColumnAndRow(2, 1)->getValue() == null) {
+                    if ($sheet->getCellByColumnAndRow(0, 1)->getValue() != 'Date' || $sheet->getCellByColumnAndRow(1, 1)->getValue() != 'Membre' || $sheet->getCellByColumnAndRow(2, 1)->getValue() != 'Retard') {
                         return $this->render('StkAdhesionBundle:Presence:upload-form.html.twig', [
                             'form' => $form->createView(),
                             'error_message' => 'Erreur de fichier excel, strucure non comform aux données du presence de tous les membres!',
                             'typeForm' => $typePresenceForm->createView()
                         ]);
                     }
-                    break;
+                    $row = 2;
+                    while ($sheet->getCellByColumnAndRow(0, $row)->getValue()) {
+                        $presence = new Presence();
+
+                        $excelDate = $sheet->getCellByColumnAndRow(0, $row)->getValue();
+
+                        $date = \DateTime::createFromFormat("d-m-Y", (date("d-m-Y", \PHPExcel_Shared_Date::ExcelToPHP($excelDate))));
+
+                        $presence->setDate($date);
+
+                        /**
+                         * @var $membre Membre
+                         */
+                        $membre = $this->getDoctrine()->getRepository('StkAdhesionBundle:Membre')->find($sheet->getCellByColumnAndRow(1, $row)->getValue());
+
+                        $presence->setMembre($membre);
+
+                        $presence->setLateTime($sheet->getCellByColumnAndRow(2, $row)->getValue());
+
+                        $row++;
+
+                        /**
+                         * @var $repository PresenceRepository
+                         */
+                        $repository = $this->getDoctrine()->getRepository('StkAdhesionBundle:Presence');
+                        if($repository->isExist($presence->getMembre(), $presence->getDate())) {
+                            continue;
+                        }
+
+                        $em->persist($presence);
+                        $em->flush();
+                    }
+                    return $this->redirect($this->generateUrl('yearpresence'));
                 case 'bc';
-                    if ($sheet->getCellByColumnAndRow(0, 1)->getValue() != 'Date' && $sheet->getCellByColumnAndRow(2, 1)->getValue() != null) {
+                    if ($sheet->getCellByColumnAndRow(0, 1)->getValue() != 'Date' || $sheet->getCellByColumnAndRow(1, 1)->getValue() != 'Membre' || $sheet->getCellByColumnAndRow(2, 1)->getValue() != null) {
                         return $this->render('StkAdhesionBundle:Presence:upload-form.html.twig', [
                             'form' => $form->createView(),
                             'error_message' => 'Erreur de fichier excel, strucure non comform aux données du presence de bureau/commit!',
@@ -125,8 +157,6 @@ class PresenceController extends Controller
                          * @var $repository PresenceBCRepository
                          */
                         $repository = $this->getDoctrine()->getRepository('StkAdhesionBundle:PresenceBC');
-                        var_dump($repository->isExist($presenceBc->getMembre(), $presenceBc->getDate()));
-                            die();
                         if($repository->isExist($presenceBc->getMembre(), $presenceBc->getDate())) {
                             continue;
                         }

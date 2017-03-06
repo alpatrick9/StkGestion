@@ -35,4 +35,12 @@ class PresenceRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('presence.lateTime > :defineLate')->setParameter('defineLate', $defineLate);
         return $query->getQuery()->getOneOrNullResult();
     }
+
+    public function isExist(Membre $membre, \DateTime $date) {
+
+        $query = $this->createQueryBuilder('presence')
+            ->where('presence.date = :date')->setParameter('date', date('Y-m-d',$date->getTimestamp()))
+            ->andWhere('presence.membre = :membre')->setParameter('membre', $membre);
+        return $query->getQuery()->getResult() != null;
+    }
 }
