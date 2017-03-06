@@ -309,4 +309,69 @@ class PresenceController extends Controller
             'etats' => $etats
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("delete", name="deletepresence")
+     */
+    public function deleteAction(Request $request) {
+        /**
+         * @var $presenceRepository PresenceRepository
+         */
+        $presenceRepository = $this->getDoctrine()->getRepository("StkAdhesionBundle:Presence");
+
+        /**
+         * @var $presenceBcRepository PresenceBCRepository
+         */
+        $presenceBcRepository = $this->getDoctrine()->getRepository("StkAdhesionBundle:PresenceBC");
+
+        /**
+         * @var string[]
+         */
+        $presenceYears = $presenceRepository->yearsDistinct();
+
+        /**
+         * @var string[]
+         */
+        $presenceBcYear = $presenceBcRepository->yearsDistinct();
+
+        /**
+         * @var integer[]
+         */
+        $year = [];
+
+        foreach ($presenceYears as $value) {
+            $year[$value[1]] = intval($value[1]);
+        }
+
+        foreach ($presenceBcYear as $value) {
+            if(in_array($value[1], $year)) {
+                continue;
+            }
+            $year[$value[1]] = intval($value[1]);
+        }
+
+        if(empty($year)) {
+            $year = range(date('Y'),date('Y'));
+            $year[$year[0]] = $year[0];
+            unset($year[0]);
+        }
+
+        $form = $this->createForm(new YearType($year));
+
+        if($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            $currentYear = $form['year']->getData();
+            $presenceBcRepository->deleteByYear($currentYear);
+            $presenceRepository->deleteByYear($currentYear);
+            return $this->redirect($this->generateUrl('homeadhesion'));
+        }
+
+        return $this->render('StkAdhesionBundle:Presence:delete-form.html.twig', [
+            'form' => $form->createView()
+        ]);
+        
+    }
 }

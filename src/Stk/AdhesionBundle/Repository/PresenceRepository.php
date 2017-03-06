@@ -12,14 +12,7 @@ use Stk\AdhesionBundle\Entity\Membre;
 class PresenceRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function findPresenceBy(Membre $membre, $annee) {
-        $query = $this->createQueryBuilder('presence')
-            ->where('YEAR(presence.date) = :year')->setParameter('year', $annee)
-            ->andWhere('presence.membre = :membre')->setParameter('membre', $membre);
-        return $query->getQuery()->getResult();
-    }
-
-    public function countPresenceBy(Membre $membre, $annee) {
+    public function countPresenceBy(Membre $membre, $year) {
         $query = $this->createQueryBuilder('presence')
             ->select('count(presence.id)')
             ->where('YEAR(presence.date) = :year')->setParameter('year', $annee)
@@ -42,5 +35,18 @@ class PresenceRepository extends \Doctrine\ORM\EntityRepository
             ->where('presence.date = :date')->setParameter('date', date('Y-m-d',$date->getTimestamp()))
             ->andWhere('presence.membre = :membre')->setParameter('membre', $membre);
         return $query->getQuery()->getResult() != null;
+    }
+    
+    public function yearsDistinct() {
+        $query = $this->createQueryBuilder('presence')
+            ->select('DISTINCT YEAR(presence.date)');
+        return $query->getQuery()->getResult();
+    }
+
+    public function deleteByYear($year) {
+        $query = $this->createQueryBuilder('presence')
+            ->delete()
+            ->where('YEAR(presence.date) = :year')->setParameter('year', $year);
+        return $query->getQuery()->getResult();
     }
 }

@@ -29,11 +29,15 @@ class YearType extends AbstractType
     /**
      * YearType constructor.
      */
-    public function __construct()
+    public function __construct($year = null)
     {
-        $this->years = range(date('Y')-5, date('Y'));
-        foreach ($this->years as $year) {
-            $this->choices[$year] = $year;
+        $this->years = $year;
+        $this->choices = $this->years;
+        if(empty($this->years)) {
+            $this->years = range(date('Y')-3, date('Y'));
+            foreach ($this->years as $y) {
+                $this->choices[$y] = $y;
+            }
         }
     }
 
