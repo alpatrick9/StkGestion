@@ -21,4 +21,21 @@ class DefaultController extends Controller
         return $this->render('default/home-menu.html.twig');
 
     }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     * @Route("backup", name="backup")
+     */
+    public function backup(Request $request) {
+        $host = $this->getParameter('database_host');
+        $user = $this->getParameter('database_user');
+        $password = $this->getParameter('database_password');
+        $db_name = $this->getParameter('database_name');
+
+        $dump = new \MySQLDump(new \mysqli($host,$user,$password,$db_name));
+        $dump->save('backup/backup.sql');
+        return $this->render('default/backup-done.html.twig');
+    }
 }

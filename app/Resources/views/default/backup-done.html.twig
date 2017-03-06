@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block menu %}
+    {{ render(controller('AppBundle:Default:homeMenu')) }}
+{% endblock %}
+
+{% block body %}
+    <h1>Sauvegarde des données</h1>
+    Sauvegarde reussi dans le dossier /StkGestion/web/backup/backup.sql
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("backup-link");
+        nav.className += " active";
+    </script>
+{% endblock %}

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "131445c1f2a0dc182e6fc9eafc44fe42",
-    "content-hash": "43787138c405599332a64186d36589a9",
+    "hash": "1826e0004db1c13f70549291d96e3a8a",
+    "content-hash": "337212dd20b7035ca2e6198de8863ddc",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -68,6 +68,43 @@
                 "orm"
             ],
             "time": "2017-01-11 07:22:12"
+        },
+        {
+            "name": "dg/mysql-dump",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/MySQL-dump.git",
+                "reference": "c1c00a6b7ded9cab37f0280fa2940b1809835f90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/MySQL-dump/zipball/c1c00a6b7ded9cab37f0280fa2940b1809835f90",
+                "reference": "c1c00a6b7ded9cab37f0280fa2940b1809835f90",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                }
+            ],
+            "description": "MySQL database dump.",
+            "homepage": "https://github.com/dg/MySQL-dump",
+            "keywords": [
+                "mysql"
+            ],
+            "time": "2015-04-18 14:09:50"
         },
         {
             "name": "doctrine/annotations",
