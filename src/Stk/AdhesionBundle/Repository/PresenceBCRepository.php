@@ -16,7 +16,7 @@ class PresenceBCRepository extends \Doctrine\ORM\EntityRepository
     public function countPresenceBy(Membre $membre, $year) {
         $query = $this->createQueryBuilder('presence')
             ->select('count(presence.id)')
-            ->where('YEAR(presence.date) = :year')->setParameter('year', $annee)
+            ->where('YEAR(presence.date) = :year')->setParameter('year', $year)
             ->andWhere('presence.membre = :membre')->setParameter('membre', $membre);
         return $query->getQuery()->getOneOrNullResult();
     }

@@ -15,15 +15,15 @@ class PresenceRepository extends \Doctrine\ORM\EntityRepository
     public function countPresenceBy(Membre $membre, $year) {
         $query = $this->createQueryBuilder('presence')
             ->select('count(presence.id)')
-            ->where('YEAR(presence.date) = :year')->setParameter('year', $annee)
+            ->where('YEAR(presence.date) = :year')->setParameter('year', $year)
             ->andWhere('presence.membre = :membre')->setParameter('membre', $membre);
         return $query->getQuery()->getOneOrNullResult();
     }
     
-    public function countLateBy(Membre $membre, $annee, $defineLate) {
+    public function countLateBy(Membre $membre, $year, $defineLate) {
         $query = $this->createQueryBuilder('presence')
             ->select('count(presence.id)')
-            ->where('YEAR(presence.date) = :year')->setParameter('year', $annee)
+            ->where('YEAR(presence.date) = :year')->setParameter('year', $year)
             ->andWhere('presence.membre = :membre')->setParameter('membre', $membre)
             ->andWhere('presence.lateTime > :defineLate')->setParameter('defineLate', $defineLate);
         return $query->getQuery()->getOneOrNullResult();
