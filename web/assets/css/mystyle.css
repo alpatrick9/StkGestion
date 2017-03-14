@@ -3,9 +3,8 @@
     margin: 2em;
 }
 
-#main {
+body {
     background: #d5dede !important;
-    height: 100vh;
 }
 
 table {
@@ -285,4 +284,14 @@ table th[class*="span"],
 
 .table-hover tbody tr.info:hover > td {
     background-color: #c4e3f3;
+}
+
+
+#presence_date_day,
+#presence_date_month,
+#presence_date_year,
+
+#presence_arrivedAt_hour,
+#presence_arrivedAt_minute {
+    width: 125px;
 }

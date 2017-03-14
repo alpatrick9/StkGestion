@@ -1,0 +1,49 @@
+{% extends "StkAdhesionBundle::layout.html.twig" %}
+{% block body_adhesion %}
+    <h2>Nouvelle presence</h2>
+    {% if info_msg is defined %}
+        <p style="color: blue "> {{ info_msg }}</p>
+    {% endif %}
+    {% if error_msg is defined %}
+        <p style="color: red "> {{ error_msg }}</p>
+    {% endif %}
+    <form method="post">
+        {{ form_widget(form) }}
+        <div class="form-button">
+            <input type="submit" value="Ajouter"/>
+        </div>
+    </form>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var nav = document.getElementById("add-presence-link");
+        nav.className += " active";
+
+        var day = document.getElementById("presence_date_day");
+        var month = document.getElementById("presence_date_month");
+        var year = document.getElementById("presence_date_year");
+
+        var isKnowOk = document.getElementById("presence_isKnow_0");
+        isKnowOk.onclick = function () {
+            day.disabled = true;
+            day.removeAttribute('required');
+
+            month.disabled = true;
+            month.removeAttribute('required');
+
+            year.disabled = true;
+            year.removeAttribute('required');
+        };
+
+        var isKnowKo = document.getElementById("presence_isKnow_1");
+        isKnowKo.onclick = function () {
+            day.removeAttribute("disabled");
+            day.required = true;
+            month.removeAttribute("disabled");
+            month.required = true;
+
+            year.removeAttribute("disabled");
+            year.required = true;
+        };
+    </script>
+{% endblock %}

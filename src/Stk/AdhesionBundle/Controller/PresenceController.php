@@ -13,10 +13,12 @@ use Doctrine\ORM\EntityManager;
 use Stk\AdhesionBundle\Entity\Membre;
 use Stk\AdhesionBundle\Entity\Presence;
 use Stk\AdhesionBundle\Entity\PresenceBC;
+use Stk\AdhesionBundle\Forms\PresenceType;
 use Stk\AdhesionBundle\Forms\UploadType;
 use Stk\AdhesionBundle\Forms\YearType;
 use Stk\AdhesionBundle\Models\EtatPresence;
 use Stk\AdhesionBundle\Models\EtatPresenceBC;
+use Stk\AdhesionBundle\Models\PresenceModel;
 use Stk\AdhesionBundle\Repository\PresenceBCRepository;
 use Stk\AdhesionBundle\Repository\PresenceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -37,7 +39,7 @@ class PresenceController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/upload", name="uploadpresence")
+     * titre de memoire mais n'est pas utiliser dans le projet
      */
     public function uploadAction(Request $request)
     {
@@ -85,47 +87,6 @@ class PresenceController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             switch ($type) {
-                case 'tm':
-                    if ($sheet->getCellByColumnAndRow(0, 1)->getValue() != 'Date' || $sheet->getCellByColumnAndRow(1, 1)->getValue() != 'Membre' || $sheet->getCellByColumnAndRow(2, 1)->getValue() != 'Retard') {
-                        return $this->render('StkAdhesionBundle:Presence:upload-form.html.twig', [
-                            'form' => $form->createView(),
-                            'error_message' => 'Erreur de fichier excel, strucure non comform aux données du presence de tous les membres!',
-                            'typeForm' => $typePresenceForm->createView()
-                        ]);
-                    }
-                    $row = 2;
-                    while ($sheet->getCellByColumnAndRow(0, $row)->getValue()) {
-                        $presence = new Presence();
-
-                        $excelDate = $sheet->getCellByColumnAndRow(0, $row)->getValue();
-
-                        $date = \DateTime::createFromFormat("d-m-Y", (date("d-m-Y", \PHPExcel_Shared_Date::ExcelToPHP($excelDate))));
-
-                        $presence->setDate($date);
-
-                        /**
-                         * @var $membre Membre
-                         */
-                        $membre = $this->getDoctrine()->getRepository('StkAdhesionBundle:Membre')->find($sheet->getCellByColumnAndRow(1, $row)->getValue());
-
-                        $presence->setMembre($membre);
-
-                        $presence->setLateTime($sheet->getCellByColumnAndRow(2, $row)->getValue());
-
-                        $row++;
-
-                        /**
-                         * @var $repository PresenceRepository
-                         */
-                        $repository = $this->getDoctrine()->getRepository('StkAdhesionBundle:Presence');
-                        if($repository->isExist($presence->getMembre(), $presence->getDate())) {
-                            continue;
-                        }
-
-                        $em->persist($presence);
-                        $em->flush();
-                    }
-                    return $this->redirect($this->generateUrl('yearpresence'));
                 case 'bc';
                     if ($sheet->getCellByColumnAndRow(0, 1)->getValue() != 'Date' || $sheet->getCellByColumnAndRow(1, 1)->getValue() != 'Membre' || $sheet->getCellByColumnAndRow(2, 1)->getValue() != null) {
                         return $this->render('StkAdhesionBundle:Presence:upload-form.html.twig', [
@@ -157,7 +118,7 @@ class PresenceController extends Controller
                          * @var $repository PresenceBCRepository
                          */
                         $repository = $this->getDoctrine()->getRepository('StkAdhesionBundle:PresenceBC');
-                        if($repository->isExist($presenceBc->getMembre(), $presenceBc->getDate())) {
+                        if ($repository->isExist($presenceBc->getMembre(), $presenceBc->getDate())) {
                             continue;
                         }
 
@@ -316,7 +277,8 @@ class PresenceController extends Controller
      *
      * @Route("delete", name="deletepresence")
      */
-    public function deleteAction(Request $request) {
+    public function deleteAction(Request $request)
+    {
         /**
          * @var $presenceRepository PresenceRepository
          */
@@ -347,21 +309,21 @@ class PresenceController extends Controller
         }
 
         foreach ($presenceBcYear as $value) {
-            if(in_array($value[1], $year)) {
+            if (in_array($value[1], $year)) {
                 continue;
             }
             $year[$value[1]] = intval($value[1]);
         }
 
-        if(empty($year)) {
-            $year = range(date('Y'),date('Y'));
+        if (empty($year)) {
+            $year = range(date('Y'), date('Y'));
             $year[$year[0]] = $year[0];
             unset($year[0]);
         }
 
         $form = $this->createForm(new YearType($year));
 
-        if($request->getMethod() == 'POST') {
+        if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             $currentYear = $form['year']->getData();
             $presenceBcRepository->deleteByYear($currentYear);
@@ -372,6 +334,94 @@ class PresenceController extends Controller
         return $this->render('StkAdhesionBundle:Presence:delete-form.html.twig', [
             'form' => $form->createView()
         ]);
-        
+
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/add", name="addpresence")
+     */
+    public function addAction(Request $request)
+    {
+        $presenceModel = new PresenceModel();
+        $form = $this->createForm(new PresenceType(), $presenceModel);
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            /**
+             * @var $em EntityManager
+             */
+            $em = $this->getDoctrine()->getManager();
+
+            switch ($presenceModel->getPresenceType()) {
+                case 'm':
+                    $presenceMembre = new Presence();
+                    $presenceMembre->setDate($presenceModel->isIsKnow() ? new \DateTime() : $presenceModel->getDate());
+
+                    if ($presenceModel->getArrivedAt() == null) {
+                        return $this->render('StkAdhesionBundle:Presence:add-presence-form.html.twig', [
+                            'form' => $form->createView(),
+                            'error_msg' => 'Le champ heure d\'arriver est obligatoire!'
+                        ]);
+                    }
+
+                    $time_start_minute = intval(date('H', $presenceModel->getStartAt()->getTimestamp())) * 60 + intval(date('i', $presenceModel->getStartAt()->getTimestamp()));
+                    $time_arrived_minute = intval(date('H', $presenceModel->getArrivedAt()->getTimestamp())) * 60 + intval(date('i', $presenceModel->getArrivedAt()->getTimestamp()));
+                    $late_time = $time_arrived_minute - $time_start_minute;
+
+                    $presenceMembre->setLateTime($late_time);
+                    $presenceMembre->setMembre($presenceModel->getMembre());
+
+                    /**
+                     * @var $repository PresenceRepository
+                     */
+                    $repository = $this->getDoctrine()->getRepository('StkAdhesionBundle:Presence');
+
+                    if ($repository->isExist($presenceMembre->getMembre(), $presenceMembre->getDate())) {
+                        return $this->render('StkAdhesionBundle:Presence:add-presence-form.html.twig', [
+                            'form' => $form->createView(),
+                            'error_msg' => 'Ces informations sont déjà enregistrées!'
+                        ]);
+                    }
+
+                    $em->persist($presenceMembre);
+                    $em->flush();
+                    break;
+                case 'bc':
+
+                    $presenceBc = new PresenceBC();
+
+                    $presenceBc->setDate($presenceModel->isIsKnow() ? new \DateTime() : $presenceModel->getDate());
+                    $presenceBc->setMembre($presenceModel->getMembre());
+
+                    /**
+                     * @var $repository PresenceBCRepository
+                     */
+                    $repository = $this->getDoctrine()->getRepository('StkAdhesionBundle:PresenceBC');
+                    if ($repository->isExist($presenceBc->getMembre(), $presenceBc->getDate())) {
+                        return $this->render('StkAdhesionBundle:Presence:add-presence-form.html.twig', [
+                            'form' => $form->createView(),
+                            'error_msg' => 'Ces informations sont déjà enregistrées!'
+                        ]);
+                    }
+
+                    $em->persist($presenceBc);
+                    $em->flush();
+                    break;
+                default:
+                    break;
+            }
+            $presenceModel = new PresenceModel();
+            $form = $this->createForm(new PresenceType(), $presenceModel);
+            return $this->render('StkAdhesionBundle:Presence:add-presence-form.html.twig', [
+                'form' => $form->createView(),
+                'info_msg' => 'Presence bien enregistrér!'
+            ]);
+        }
+        return $this->render('StkAdhesionBundle:Presence:add-presence-form.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
