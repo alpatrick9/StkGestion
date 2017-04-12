@@ -2,7 +2,28 @@
 {% block body_adhesion %}
     <h2>Nouvelle adhésion</h2>
     <form method="post">
-        {{ form_widget(form) }}
+        <table class="table-form">
+            <tr>
+                <td>{{ form_label(form.firstName) }}</td>
+                <td>{{ form_widget(form.firstName) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.lastName) }}</td>
+                <td>{{ form_widget(form.lastName) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.address) }}</td>
+                <td>{{ form_widget(form.address) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.status) }}</td>
+                <td>{{ form_widget(form.status) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.likeAs) }}</td>
+                <td>{{ form_widget(form.likeAs) }}</td>
+            </tr>
+        </table>
         <div class="form-button">
             <input type="submit" value="Enregistrer"/>
         </div>

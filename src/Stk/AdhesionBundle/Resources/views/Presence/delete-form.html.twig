@@ -3,7 +3,12 @@
     <h2>Supprimer presence par année</h2>
 
     <form method="post">
-        {{ form_widget(form) }}
+        <table class="table-form">
+            <tr>
+                <td>{{ form_label(form.year) }}</td>
+                <td>{{ form_widget(form.year) }}</td>
+            </tr>
+        </table>
         <div class="form-button">
             <input type="submit" value="Supprimer"/>
         </div>

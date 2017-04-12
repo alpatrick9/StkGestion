@@ -396,6 +396,14 @@ class PresenceController extends Controller
                     $presenceBc->setDate($presenceModel->isIsKnow() ? new \DateTime() : $presenceModel->getDate());
                     $presenceBc->setMembre($presenceModel->getMembre());
 
+                    $likeAs = $presenceBc->getMembre()->getLikeAs();
+
+                    if($likeAs != 'b' && $likeAs != 'c') {
+                        return $this->render('StkAdhesionBundle:Presence:add-presence-form.html.twig', [
+                            'form' => $form->createView(),
+                            'error_msg' => 'Le membre séléctionné n\'est pas membre du bureau ou ni du commité'
+                        ]);
+                    }
                     /**
                      * @var $repository PresenceBCRepository
                      */

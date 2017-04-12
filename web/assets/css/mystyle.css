@@ -295,3 +295,14 @@ table th[class*="span"],
 #presence_arrivedAt_minute {
     width: 125px;
 }
+
+.table-form {
+    width: 75%;
+}
+.table-form td {
+    padding: 2px 0px
+}
+
+.hidden-div {
+    display: none;
+}

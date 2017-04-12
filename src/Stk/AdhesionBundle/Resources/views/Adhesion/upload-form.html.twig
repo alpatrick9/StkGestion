@@ -5,7 +5,12 @@
         <p style="color: red "> {{ error_message }}</p>
     {% endif %}
     <form method="post" enctype="multipart/form-data">
-        {{ form_widget(form) }}
+        <table class="table-form">
+            <tr>
+                <td>{{ form_label(form.attachement) }}</td>
+                <td>{{ form_widget(form.attachement) }}</td>
+            </tr>
+        </table>
         <div class="form-button">
             <input type="submit" value="Enregistrer"/>
         </div>

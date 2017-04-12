@@ -32,10 +32,10 @@ class MembreType extends AbstractType
                 'required' => false
             ])
             ->add('status', ChoiceType::class, [
-                'label' => 'Type du membre: ',
+                'label' => 'Status: ',
                 'choices_as_values'=>true,
                 'choices'=>['Chorale'=>'c', 'Supporteur/trice'=>'s'],
-                'placeholder'=>'Choisissez...'
+                'placeholder'=>'Choisissez ...'
             ])
             ->add('likeAs', ChoiceType::class, [
                 'label' => 'Membre en tant que: ',

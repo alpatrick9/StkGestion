@@ -37,7 +37,7 @@ class PresenceType extends AbstractType
     {
         $builder
             ->add('membre', EntityType::class, [
-                'label'=>'La personne: ',
+                'label'=>'Membre concerné: ',
                 'class'=>'Stk\AdhesionBundle\Entity\Membre',
                 'property'=>'id',
                 'query_builder'=> function(MembreRepository $repository) {
@@ -64,6 +64,7 @@ class PresenceType extends AbstractType
             ->add('arrivedAt', TimeType::class, [
                 'label' => 'Heure d\'arriver: ',
                 'placeholder'=>['hour' => 'Heure', 'minute' => 'Minute'],
+                'hours'=> range(16,22),
                 'required'=>false
             ])
             ->add('startAt', ChoiceType::class, [

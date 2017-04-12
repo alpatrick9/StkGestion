@@ -8,7 +8,37 @@
         <p style="color: red "> {{ error_msg }}</p>
     {% endif %}
     <form method="post">
-        {{ form_widget(form) }}
+        <table class="table-form">
+            <tr>
+                <td>{{ form_label(form.membre) }}</td>
+                <td>{{ form_widget(form.membre) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.isKnow) }}</td>
+                <td>{{ form_widget(form.isKnow) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.date) }}</td>
+                <td>
+                    <div id="presence_date_line">
+                        {{ form_widget(form.date) }}
+                    </div>
+                    <div id="date_now" class="hidden-div" style="width: 380px;"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.startAt) }}</td>
+                <td>{{ form_widget(form.startAt) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.arrivedAt) }}</td>
+                <td>{{ form_widget(form.arrivedAt) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.presenceType) }}</td>
+                <td>{{ form_widget(form.presenceType) }}</td>
+            </tr>
+        </table>
         <div class="form-button">
             <input type="submit" value="Ajouter"/>
         </div>
@@ -23,9 +53,20 @@
         var month = document.getElementById("presence_date_month");
         var year = document.getElementById("presence_date_year");
 
+        var presence_date_line = document.getElementById("presence_date_line");
+
+        var presence_date_now = document.getElementById("date_now");
+
+        var today = new Date();
+        presence_date_now.innerHTML = today.toLocaleDateString();
+
         var isKnowOk = document.getElementById("presence_isKnow_0");
         isKnowOk.onclick = function () {
             day.disabled = true;
+
+            presence_date_line.className += " hidden-div";
+            presence_date_now.classList.remove("hidden-div")
+
             day.removeAttribute('required');
 
             month.disabled = true;
@@ -37,6 +78,9 @@
 
         var isKnowKo = document.getElementById("presence_isKnow_1");
         isKnowKo.onclick = function () {
+            presence_date_now.className += " hidden-div";
+            presence_date_line.classList.remove("hidden-div");
+
             day.removeAttribute("disabled");
             day.required = true;
             month.removeAttribute("disabled");
