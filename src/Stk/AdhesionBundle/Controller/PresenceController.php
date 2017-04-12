@@ -235,8 +235,6 @@ class PresenceController extends Controller
     public function etatPresenceBureauAction(Request $request, $year)
     {
 
-        $intervalMinuteToLate = $this->getParameter('interval_to_late');
-
         /**
          * @var $membres Membre[]
          */

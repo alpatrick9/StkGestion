@@ -18,8 +18,8 @@ class MembreRepository extends \Doctrine\ORM\EntityRepository
     
     public function findChoralBC() {
         $query = $this->createQueryBuilder('membre')
-            ->where('membre.likeAs like :likeAs')->setParameter('likeAs','b')
-            ->orWhere('membre.likeAs like :likeAs')->setParameter('likeAs','c');
+            ->where('membre.likeAs like :likeAsBureau')->setParameter('likeAsBureau','b')
+            ->orWhere('membre.likeAs like :likeAsCommite')->setParameter('likeAsCommite','c');
         return $query->getQuery()->getResult();
     }
 
