@@ -345,7 +345,7 @@ class PresenceController extends Controller
     public function addAction(Request $request)
     {
         $presenceModel = new PresenceModel();
-        $form = $this->createForm(new PresenceType(), $presenceModel);
+        $form = $this->createForm(new PresenceType($this->getParameter('presence_type'), $this->getParameter('choral')), $presenceModel);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -398,7 +398,7 @@ class PresenceController extends Controller
 
                     $likeAs = $presenceBc->getMembre()->getLikeAs();
 
-                    if($likeAs != 'b' && $likeAs != 'c') {
+                    if($likeAs != $this->getParameter('bureau_membre') && $likeAs != $this->getParameter('commite_membre')) {
                         return $this->render('StkAdhesionBundle:Presence:add-presence-form.html.twig', [
                             'form' => $form->createView(),
                             'error_msg' => 'Le membre séléctionné n\'est pas membre du bureau ou ni du commité'
@@ -422,7 +422,7 @@ class PresenceController extends Controller
                     break;
             }
             $presenceModel = new PresenceModel();
-            $form = $this->createForm(new PresenceType(), $presenceModel);
+            $form = $this->createForm(new PresenceType($this->getParameter('presence_type'),$this->getParameter('choral')), $presenceModel);
             return $this->render('StkAdhesionBundle:Presence:add-presence-form.html.twig', [
                 'form' => $form->createView(),
                 'info_msg' => 'Presence bien enregistrér!'

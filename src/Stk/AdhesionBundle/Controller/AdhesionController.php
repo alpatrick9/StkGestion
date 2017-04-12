@@ -30,7 +30,7 @@ class AdhesionController extends Controller
      */
     public function newAdhesionAction(Request $request) {
         $membre = new Membre();
-        $form = $this->createForm(new MembreType(), $membre);
+        $form = $this->createForm(new MembreType($this->getParameter('status_for_type'), $this->getParameter('membre_like_as_for_type')), $membre);
 
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -61,7 +61,7 @@ class AdhesionController extends Controller
      * @Route("/edit/{id}", name="editmembre")
      */
     public function updateAction(Request $request, Membre $membre) {
-        $form = $this->createForm(new MembreType(), $membre);
+        $form = $this->createForm(new MembreType($this->getParameter('status_for_type'), $this->getParameter('membre_like_as_for_type')), $membre);
 
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);

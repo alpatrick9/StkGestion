@@ -17,6 +17,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MembreType extends AbstractType
 {
+    private $status;
+    private $likeAs;
+
+    /**
+     * MembreType constructor.
+     * @param $status
+     * @param $likeAs
+     */
+    public function __construct($status, $likeAs)
+    {
+        $this->status = $status;
+        $this->likeAs = $likeAs;
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -34,13 +49,13 @@ class MembreType extends AbstractType
             ->add('status', ChoiceType::class, [
                 'label' => 'Status: ',
                 'choices_as_values'=>true,
-                'choices'=>['Chorale'=>'c', 'Supporteur/trice'=>'s'],
+                'choices'=>$this->status,
                 'placeholder'=>'Choisissez ...'
             ])
             ->add('likeAs', ChoiceType::class, [
                 'label' => 'Membre en tant que: ',
                 'choices_as_values'=>true,
-                'choices'=>['Simple membre'=>'s', 'Membre du bureau'=>'b', 'Membre du commité'=>'c'],
+                'choices'=>$this->likeAs,
                 'placeholder'=>'Choisissez...'
             ]);
     }

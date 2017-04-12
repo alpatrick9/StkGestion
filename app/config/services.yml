@@ -2,8 +2,22 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
 #    parameter_name: value
-    status: {c: 'Chorale', s: 'Supporteur/trice'}
-    membre_like_as: {s: 'Simple membre', b: 'Membre du bureau', c: 'Membre du commité'}
+    simple_membre: 's'
+    bureau_membre: 'b'
+    commite_membre: 'c'
+    choral: 'c'
+    supporteur/trice: 's'
+    membre_type: 'm'
+    bureau/commite_type: 'bc'
+
+    status: {%choral%: 'Chorale', %supporteur/trice%: 'Supporteur/trice'}
+    status_for_type: { Chorale: %choral%, Supporteur/trice: %supporteur/trice%}
+
+    membre_like_as: {%simple_membre%: 'Simple membre', %bureau_membre%: 'Membre du bureau', %commite_membre%: 'Membre du commité'}
+    membre_like_as_for_type: {'Simple membre': %simple_membre%, 'Membre du bureau': %bureau_membre%, 'Membre du commité': %commite_membre%}
+
+    presence_type: {Membre: %membre_type%, Bureau/Commite: %bureau/commite_type%}
+
     upload_type: 'application/vnd.ms-office'
     interval_to_late: 15
 

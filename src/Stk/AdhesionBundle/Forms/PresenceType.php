@@ -21,15 +21,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class PresenceType extends AbstractType
 {
     private $tabHeure = [];
+    private $presenceType;
+    private $status;
 
     /**
      * PresenceType constructor.
      */
-    public function __construct()
+    public function __construct($presenceType, $status)
     {
-
         $this->tabHeure['18:00'] = new \DateTime('1970-01-01 18:00:00');
         $this->tabHeure['18:30'] = new \DateTime('1970-01-01 18:30:00');
+        $this->presenceType = $presenceType;
+        $this->status = $status;
     }
 
 
@@ -42,7 +45,7 @@ class PresenceType extends AbstractType
                 'property'=>'id',
                 'query_builder'=> function(MembreRepository $repository) {
                     return $repository->createQueryBuilder('membre')
-                        ->where('membre.status= :status')->setParameter('status','c')
+                        ->where('membre.status= :status')->setParameter('status',$this->status)
                         ->orderBy('membre.lastName', 'ASC');
                 },
                 'choice_label'=>'lastName',
@@ -77,7 +80,7 @@ class PresenceType extends AbstractType
             ->add('presenceType', ChoiceType::class, [
                 'label' => 'Presence de: ',
                 'choices_as_values'=>true,
-                'choices'=>['Membre'=>'m', 'Bureau/Commite'=>'bc'],
+                'choices'=>$this->presenceType,
                 'placeholder'=>'Choisissez...'
             ]);
     }
