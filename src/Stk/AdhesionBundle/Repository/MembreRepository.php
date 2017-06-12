@@ -28,4 +28,11 @@ class MembreRepository extends \Doctrine\ORM\EntityRepository
             ->select('MAX(membre.id)');
         return $query->getQuery()->getSingleScalarResult();
     }
+    
+    public function findByKeyword($keyword) {
+        $query = $this->createQueryBuilder('membre')
+            ->where('membre.firstName like :firstName')->setParameter('firstName', '%'.$keyword.'%')
+            ->orWhere('membre.lastName like :lastName ')->setParameter('lastName', '%'.$keyword.'%');
+        return $query->getQuery()->getResult();
+    }
 }

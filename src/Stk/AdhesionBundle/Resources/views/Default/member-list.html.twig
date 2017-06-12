@@ -1,0 +1,47 @@
+<table class="table table-hover table-bordered table-striped">
+    <thead>
+    <th>#</th>
+    <th>Nom</th>
+    <th>Prenom</th>
+    <th>Adresse</th>
+    <th>Membre en tant que</th>
+    <th>Status</th>
+    <th></th>
+    </thead>
+    <tbody>
+    {% for membre in membres %}
+        <tr>
+            <td>
+                {{ membre.id}}
+            </td>
+            <td>
+                {{ membre.firstName}}
+            </td>
+            <td>
+                {{ membre.lastName}}
+            </td>
+            <td>
+                {{ membre.address}}
+            </td>
+            <td>
+                {{ likeAs[membre.likeAs] }}
+            </td>
+            <td>
+                {{ status[membre.status] }}
+            </td>
+            <td>
+                <a href="{{ path('editmembre', {id: membre.id}) }}" title="Modifier">
+                    <span class="icon fa-edit"></span>
+                </a>
+                <a href="{{ path('deletemembre', {id: membre.id}) }}" title="Supprimer" onclick="return confirm('Voulez vous supprimer tous les données concernant {{ membre.lastName }} {{ membre.firstName }}?')">
+                    <span class="icon fa-remove"></span>
+                </a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="7">Aucun membre enregistré</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

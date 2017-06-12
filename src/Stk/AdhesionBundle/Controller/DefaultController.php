@@ -18,6 +18,16 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+
+        return $this->render('StkAdhesionBundle:Default:index.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/member-list/{keyword}", name="member_list")
+     */
+    public function listMembreAction($keyword = "") {
+
         /**
          * @var MembreRepository
          */
@@ -26,12 +36,18 @@ class DefaultController extends Controller
         /**
          * @var Membre[]
          */
-        $membres = $repository->findAll();
+        $membres = [];
+
+        if($keyword != "") {
+            $membres = $repository->findByKeyword($keyword);
+        } else {
+            $membres = $repository->findAll();
+        }
 
         $status = $this->getParameter('status');
         $likeAs = $this->getParameter('membre_like_as');
 
-        return $this->render('StkAdhesionBundle:Default:index.html.twig', [
+        return $this->render('StkAdhesionBundle:Default:member-list.html.twig', [
             'membres' => $membres,
             'status' => $status,
             'likeAs'=> $likeAs
